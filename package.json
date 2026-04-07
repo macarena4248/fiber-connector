@@ -4,5 +4,8 @@
     "devDependencies": {
         "@types/bun": "latest",
         "@typescript/native-preview": "latest"
+    },
+    "dependencies": {
+        "citty": "^0.2.2"
     }
 }
