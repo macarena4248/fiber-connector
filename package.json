@@ -6,6 +6,7 @@
         "@typescript/native-preview": "latest"
     },
     "dependencies": {
-        "citty": "^0.2.2"
+        "citty": "^0.2.2",
+        "picocolors": "^1.1.1"
     }
 }
