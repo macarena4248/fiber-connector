@@ -1,7 +1,6 @@
-import pc from "picocolors";
 import readline from "node:readline";
 import { defineCommand, runMain } from "citty";
-import { PROVIDERS } from "./constants.local.ts";
+import { PROVIDERS, BASE_CONFIG } from "./constants.local.ts";
 import { CONFIG_BASE_URL, CONVERSION_PROVIDER } from "./constants.ts";
 
 /**
@@ -21,10 +20,57 @@ const generateSubUrl = (baseUrl: string, config: Config): string => {
 
 type Config = Record<string, string | boolean | undefined>;
 
-const main = defineCommand({
+const generateIniContent = (configObj: Config): string => {
+    let content = "[Profile]\n";
+    for (const [key, value] of Object.entries(configObj)) {
+        if (value !== undefined) {
+            content += `${key}=${value}\n`;
+        }
+    }
+    return content;
+};
+
+const compileCommand = defineCommand({
     meta: {
-        name: "fiber-connector",
-        description: "Generate and fetch Clash subscription configuration.",
+        name: "compile",
+        description: "Generate INI profiles for full and mini subscriptions.",
+    },
+    args: {
+        env: {
+            type: "string",
+            default: "main",
+            description: "Branch to use (main or dev)",
+        },
+    },
+    async run({ args }) {
+        const branch = args.env === "dev" ? "dev" : "main";
+        const configUrl = `${CONFIG_BASE_URL}/${branch}/config/main.ini`;
+
+        const fullConfig: Config = {
+            ...BASE_CONFIG,
+            url: PROVIDERS.join("|"),
+            config: configUrl,
+        };
+
+        const miniConfig: Config = {
+            ...BASE_CONFIG,
+            url: PROVIDERS[0],
+            config: configUrl,
+        };
+
+        await Promise.all([
+            Bun.write("out/full.ini", generateIniContent(fullConfig)),
+            Bun.write("out/mini.ini", generateIniContent(miniConfig)),
+        ]);
+        
+        console.log(`Successfully wrote out/full.ini and out/mini.ini`);
+    },
+});
+
+const combineCommand = defineCommand({
+    meta: {
+        name: "combine",
+        description: "Combine configuration and fetch final subscription.",
     },
     args: {
         env: {
@@ -42,27 +88,25 @@ const main = defineCommand({
         const branch = args.env === "dev" ? "dev" : "main";
         const configUrl = `${CONFIG_BASE_URL}/${branch}/config/main.ini`;
 
-        const config: Config = {
-            target: "clash",
-            url: PROVIDERS,
+        const fullConfig: Config = {
+            ...BASE_CONFIG,
+            url: PROVIDERS.join("|"),
             config: configUrl,
-            filename: "beacon.yaml",
-            exclude: "流量",
         };
 
-        const finalUrl = generateSubUrl(CONVERSION_PROVIDER, config);
+        const finalUrl = generateSubUrl(CONVERSION_PROVIDER, fullConfig);
 
-        console.log(`\n${pc.bold("Branch:")}      ${pc.cyan(branch)}`);
-        console.log(`${pc.bold("Config URL:")}  ${pc.green(configUrl)}`);
-        console.log(`${pc.bold("Final URL:")}   ${pc.green(finalUrl)}`);
-        console.log(`${pc.bold("Output File:")} ${pc.magenta(args.file)}\n`);
+        console.log(`\nBranch:      ${branch}`);
+        console.log(`Config URL:  ${configUrl}`);
+        console.log(`Final URL:   ${finalUrl}`);
+        console.log(`Output File: ${args.file}\n`);
 
         if (args.file === "false") {
-            console.log(pc.yellow("ℹ File writing disabled. Skipping fetch.\n"));
+            console.log("ℹ File writing disabled. Skipping fetch.\n");
             return;
         }
 
-        process.stdout.write(pc.yellow("⟳ Fetching configuration...\r"));
+        process.stdout.write("⟳ Fetching configuration...\r");
 
         return fetch(finalUrl)
             .then((response) => response.text())
@@ -70,15 +114,26 @@ const main = defineCommand({
                 return Bun.write(args.file, content).then(() => {
                     readline.clearLine(process.stdout, 0);
                     readline.cursorTo(process.stdout, 0);
-                    process.stdout.write(`${pc.green(`✔ Successfully wrote to ${pc.magenta(args.file)}`)}\n\n`);
+                    process.stdout.write(`✔ Successfully wrote to ${args.file}\n\n`);
                 });
             })
             .catch((error) => {
                 readline.clearLine(process.stdout, 0);
                 readline.cursorTo(process.stdout, 0);
-                process.stdout.write(`${pc.red("✖ Failed to fetch or write config")}\n\n`);
+                process.stdout.write(`✖ Failed to fetch or write config\n\n`);
                 console.error(error);
             });
+    },
+});
+
+const main = defineCommand({
+    meta: {
+        name: "fiber-connector",
+        description: "Fiber Connector CLI tool.",
+    },
+    subCommands: {
+        compile: compileCommand,
+        combine: combineCommand,
     },
 });
 
