@@ -77,6 +77,7 @@ importLink.addEventListener("click", () => {
 });
 
 function invalidateResult() {
+  element("api-attribution").hidden = endpoint.value.trim() !== DEFAULT_API;
   result.hidden = true;
   resultUrl.value = "";
   importLink.removeAttribute("href");

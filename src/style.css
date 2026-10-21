@@ -437,44 +437,9 @@ details[open] summary span {
   min-height: 18px;
   margin: 14px 0 0;
 }
-.bottom-note {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 13px;
-  margin: 24px 0 48px;
-  color: #718068;
-}
-.bottom-note > span {
-  font-size: 32px;
-  color: #859965;
-}
-.bottom-note p {
-  font-size: 12px;
+#status:empty {
+  min-height: 0;
   margin: 0;
-}
-.bottom-note p span {
-  font-size: 10px;
-  color: #8a9382;
-}
-footer {
-  border-top: 1px solid var(--line);
-  max-width: 1028px;
-  margin: auto;
-  padding: 23px 0 28px;
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  font-size: 10px;
-  color: #84907a;
-}
-footer > span:first-child {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 1.6px;
-}
-footer a {
-  text-decoration: none;
 }
 .sr-only {
   position: absolute;

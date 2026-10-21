@@ -12,6 +12,8 @@ test("builds, copies, and prepares an app import without sending subscriptions",
   });
   await page.goto("./");
   await expect(page).toHaveTitle(/Fiber Connector/);
+  await expect(page.locator("footer, .bottom-note")).toHaveCount(0);
+  await expect(page.getByRole("status")).toHaveCSS("height", "0px");
   await page
     .getByRole("button", { name: "Generate subscription link" })
     .click();
@@ -71,8 +73,13 @@ test("custom APIs, template defaults, and validation", async ({ page }) => {
     .getByLabel("Subscription links", { exact: true })
     .fill("https://one.example/sub");
   const api = page.getByLabel("Converter API", { exact: true });
+  await expect(page.locator("#api-attribution")).toBeVisible();
   await api.fill(
     "https://custom.example/prefix/?token=api&target=surge&explain=true&config=old&list=true",
+  );
+  await expect(page.locator("#api-attribution")).toBeHidden();
+  await expect(page.locator("#endpoint-hint")).toContainText(
+    "Base URLs and full /sub endpoints are accepted.",
   );
   await page.getByText("Configuration options", { exact: false }).click();
   await page.getByLabel("Routing template URL", { exact: true }).fill("");
@@ -112,6 +119,7 @@ test("custom APIs, template defaults, and validation", async ({ page }) => {
   await expect(page.locator("#endpoint-error")).toBeVisible();
   await page.getByRole("button", { name: "Use default" }).click();
   await expect(api).toHaveValue("https://api.asailor.org/sub");
+  await expect(page.locator("#api-attribution")).toBeVisible();
   await page
     .getByLabel("Routing template URL", { exact: true })
     .fill("bad template");

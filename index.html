@@ -99,13 +99,16 @@
             </button>
           </div>
           <p id="endpoint-hint" class="hint">
-            Powered by
-            <a
-              href="https://github.com/Aethersailor/SubConverter-Extended"
-              target="_blank"
-              rel="noreferrer"
-              >SubConverter-Extended ↗</a
-            >. Base URLs and full /sub endpoints are accepted.
+            <span id="api-attribution"
+              >Powered by
+              <a
+                href="https://github.com/Aethersailor/SubConverter-Extended"
+                target="_blank"
+                rel="noreferrer"
+                >SubConverter-Extended ↗</a
+              >.</span
+            >
+            Base URLs and full /sub endpoints are accepted.
           </p>
           <p id="endpoint-error" class="error" hidden></p>
           <details>
@@ -178,25 +181,7 @@
         </p>
       </section>
       <p id="status" role="status" aria-live="polite"></p>
-      <div class="bottom-note">
-        <span aria-hidden="true">✳</span>
-        <p>
-          A little less setup. A little more connected.<br /><span
-            >No account, no saved subscriptions, no extra steps.</span
-          >
-        </p>
-      </div>
     </main>
-    <footer>
-      <span>FIBER CONNECTOR</span
-      ><span>A static, open-source subscription companion.</span
-      ><a
-        href="https://github.com/Aethersailor/SubConverter-Extended/wiki"
-        target="_blank"
-        rel="noreferrer"
-        >API documentation ↗</a
-      >
-    </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
