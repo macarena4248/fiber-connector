@@ -1,0 +1,89 @@
+@media (min-width: 1100px) {
+  main {
+    width: 780px;
+  }
+  .intro {
+    padding-top: 52px;
+  }
+}
+@media (max-width: 700px) {
+  .site-header {
+    padding: 22px;
+  }
+  .brand {
+    font-size: 18px;
+  }
+  .intro {
+    padding-top: 30px;
+  }
+  .fiber-art {
+    right: -65px;
+    top: 45px;
+    opacity: 0.35;
+    width: 160px;
+    z-index: -1;
+  }
+  h1 {
+    letter-spacing: -1.8px;
+  }
+  .panel {
+    padding: 22px 18px;
+    border-radius: 13px;
+  }
+  .section-heading {
+    gap: 10px;
+  }
+  .section-heading h2 {
+    font-size: 16px;
+  }
+  .section-heading p {
+    font-size: 11px;
+    max-width: 220px;
+  }
+  .pill {
+    display: none;
+  }
+  .field-footer {
+    align-items: flex-start;
+    font-size: 10px;
+  }
+  .endpoint-row {
+    flex-wrap: wrap;
+  }
+  .endpoint-row input {
+    flex-basis: 100%;
+  }
+  .endpoint-row button {
+    min-height: 34px;
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  .intro > p {
+    font-size: 14px;
+  }
+  .intro-tags {
+    gap: 19px;
+  }
+  footer {
+    margin: 0 22px;
+    flex-wrap: wrap;
+    font-size: 9px;
+  }
+  footer > span:nth-child(2) {
+    display: none;
+  }
+  .bottom-note {
+    margin-bottom: 35px;
+  }
+  .result-actions {
+    flex-wrap: wrap;
+  }
+  .result-actions > * {
+    white-space: nowrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

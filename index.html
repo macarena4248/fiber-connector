@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f6f0" />
+    <meta
+      name="description"
+      content="Bring your subscriptions together. Generate a Mihomo subscription link, copy it, or open it in your app."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>Fiber Connector — Your subscriptions, connected</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Fiber Connector home"
+        ><span class="brand-icon" aria-hidden="true">f<span>↗</span></span
+        >fiber<span class="brand-light">connector</span></a
+      >
+      <a
+        class="source-link"
+        href="https://github.com/macarena4248/fiber-connector"
+        target="_blank"
+        rel="noreferrer"
+        >View source <span aria-hidden="true">↗</span></a
+      >
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div class="eyebrow"><span></span> MADE FOR MIHOMO</div>
+        <h1 id="title">
+          Your subscriptions.<br />One connection<span class="accent">.</span>
+        </h1>
+        <p>
+          Bring your subscription links together.<br class="desktop-break" />
+          Get one ready-to-use configuration for your favorite app.
+        </p>
+        <div class="intro-tags">
+          <span>↗ &nbsp; No installation</span
+          ><span>⌘ &nbsp; Runs in your browser</span>
+        </div>
+        <div class="fiber-art" aria-hidden="true">
+          <i></i><i></i><i></i><b>↗</b>
+        </div>
+      </section>
+      <form id="connector" novalidate>
+        <section
+          class="panel input-panel"
+          aria-labelledby="subscriptions-title"
+        >
+          <div class="section-heading">
+            <span class="step">01</span>
+            <div>
+              <h2 id="subscriptions-title">Add your subscriptions</h2>
+              <p>One subscription URL per line. We’ll bring them together.</p>
+            </div>
+            <span id="link-count" class="count">0 links</span>
+          </div>
+          <label class="sr-only" for="subscriptions">Subscription links</label>
+          <textarea
+            id="subscriptions"
+            rows="6"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            placeholder="https://provider.one/subscribe?token=…&#10;https://provider.two/subscribe?token=…"
+            aria-describedby="subscriptions-error"
+          ></textarea>
+          <p id="subscriptions-error" class="error" hidden></p>
+          <div class="field-footer">
+            <span
+              >Subscription links stay in this tab until you use the generated
+              link.</span
+            ><button id="clear" class="text-button" type="button">Clear</button>
+          </div>
+        </section>
+        <section class="panel" aria-labelledby="converter-title">
+          <div class="section-heading">
+            <span class="step">02</span>
+            <div>
+              <h2 id="converter-title">Choose your converter</h2>
+              <p>Use the public API, or bring your own.</p>
+            </div>
+            <span class="pill">Mihomo / Clash</span>
+          </div>
+          <label for="endpoint">Converter API</label>
+          <div class="endpoint-row">
+            <input
+              id="endpoint"
+              type="url"
+              value="https://api.asailor.org/sub"
+              spellcheck="false"
+              autocomplete="off"
+              aria-describedby="endpoint-hint endpoint-error"
+              required
+            /><button id="reset-api" class="secondary-button" type="button">
+              Use default
+            </button>
+          </div>
+          <p id="endpoint-hint" class="hint">
+            Powered by
+            <a
+              href="https://github.com/Aethersailor/SubConverter-Extended"
+              target="_blank"
+              rel="noreferrer"
+              >SubConverter-Extended ↗</a
+            >. Base URLs and full /sub endpoints are accepted.
+          </p>
+          <p id="endpoint-error" class="error" hidden></p>
+          <details>
+            <summary>
+              Configuration options <span aria-hidden="true">+</span>
+            </summary>
+            <div class="options">
+              <label for="profile-name">Profile name</label
+              ><input
+                id="profile-name"
+                value="Fiber"
+                maxlength="80"
+                autocomplete="off"
+              /><label for="template">Routing template URL</label
+              ><input
+                id="template"
+                type="url"
+                spellcheck="false"
+                autocomplete="off"
+              />
+              <p class="hint">
+                Uses Fiber’s existing routing rules. Leave blank to use the
+                converter’s default.
+              </p>
+              <p id="template-error" class="error" hidden></p>
+            </div>
+          </details>
+          <p class="privacy-note">
+            <span aria-hidden="true">i</span> When your app imports or updates,
+            the selected converter receives your subscription URLs. Use an API
+            you trust.
+          </p>
+          <button class="primary-button generate" type="submit">
+            Generate subscription link <span aria-hidden="true">↗</span>
+          </button>
+        </section>
+      </form>
+      <section
+        id="result"
+        class="panel result-panel"
+        aria-labelledby="result-title"
+        hidden
+      >
+        <div class="section-heading">
+          <span class="step">03</span>
+          <div>
+            <h2 id="result-title">Your connection is ready</h2>
+            <p>Copy the link or send it straight to your app.</p>
+          </div>
+          <span class="ready-dot" aria-hidden="true"></span>
+        </div>
+        <label for="result-url">Subscription URL</label
+        ><textarea
+          id="result-url"
+          rows="3"
+          readonly
+          spellcheck="false"
+        ></textarea>
+        <div class="result-actions">
+          <button id="copy" type="button" class="primary-button">
+            Copy link</button
+          ><a id="import" class="secondary-button" href="#"
+            >Import to app <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <p class="hint">
+          Import opens an installed app that handles clash:// links, such as
+          Clash Verge Rev. If nothing opens, copy the link into your app’s
+          subscriptions.
+        </p>
+      </section>
+      <p id="status" role="status" aria-live="polite"></p>
+      <div class="bottom-note">
+        <span aria-hidden="true">✳</span>
+        <p>
+          A little less setup. A little more connected.<br /><span
+            >No account, no saved subscriptions, no extra steps.</span
+          >
+        </p>
+      </div>
+    </main>
+    <footer>
+      <span>FIBER CONNECTOR</span
+      ><span>A static, open-source subscription companion.</span
+      ><a
+        href="https://github.com/Aethersailor/SubConverter-Extended/wiki"
+        target="_blank"
+        rel="noreferrer"
+        >API documentation ↗</a
+      >
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
