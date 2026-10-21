@@ -115,6 +115,7 @@ button:hover,
 main {
   width: min(780px, calc(100% - 40px));
   margin: auto;
+  padding-bottom: 48px;
 }
 .intro {
   position: relative;
