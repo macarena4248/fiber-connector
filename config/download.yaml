@@ -1,3 +1,10 @@
 payload:
   - '+.cachix.org'
   - 'cache.numtide.org'
+  - '+.drive.google.com'
+  - 'drive.usercontent.google.com'
+  - 'drive-data-export.usercontent.google.com'
+  - 'drive-data-export-eu.usercontent.google.com'
+  - '+.docs.google.com'
+  - '+.googleusercontent.com'
+  - 'googledrive.com'
